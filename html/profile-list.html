@@ -37,26 +37,30 @@
             <a href="/html/profile-edit.html"><button>+ 새 프로필</button></a>
         </div>
 
-        <div style="display:flex; gap:12px; align-items:center; justify-content:space-between; margin-top:8px;">
-            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                <input id="q" placeholder="이름/알레르기 검색" style="padding:8px; min-width:220px;">
-                <select id="sort" style="padding:8px;">
-                    <option value="createdAt_desc">최신 등록순</option>
-                    <option value="name_asc">이름 ㄱ-ㅎ</option>
-                    <option value="birth_asc">생일 빠른순</option>
+        <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div>
+                총 <strong id="count">0명</strong>
+                <input id="q" type="search" placeholder="이름/알레르기 검색" style="margin-left:10px;">
+                <select id="sort" style="margin-left:8px;">
+                    <option value="createdAt_desc">최근 추가 순</option>
+                    <option value="name_asc">이름순</option>
+                    <option value="birth_asc">생일순</option>
                 </select>
-                <span id="count" style="color:#666; font-size:14px;">0명</span>
             </div>
-            <a href="/html/profile-edit.html"><button class="btn">+ 새 프로필</button></a>
+
+            <div style="display:flex;gap:8px;align-items:center;">
+                <button id="exportProfiles">내보내기</button>
+                <label class="btn-ghost" style="cursor:pointer;">
+                    가져오기 <input type="file" id="importProfiles" accept="application/json" hidden>
+                </label>
+            </div>
         </div>
 
-        <div id="profileList"
-            style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:16px;">
-        </div>
+        <div id="profileList"></div>
 
-        <div style="display:flex; gap:8px; justify-content:center; align-items:center; margin:16px 0;">
+        <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-top:12px;">
             <button id="prev">이전</button>
-            <span id="pageInfo" style="min-width:88px; text-align:center;">1 / 1</span>
+            <span id="pageInfo">1 / 1</span>
             <button id="next">다음</button>
         </div>
 
@@ -83,7 +87,12 @@
             }
         });
     </script>
-    <div id="toast"></div>
+    <div id="toast" style="
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:#333;color:#fff;padding:10px 16px;border-radius:8px;
+  display:none;z-index:1000;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,.25);
+"></div>
+
 
 </body>
 
