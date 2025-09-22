@@ -1,5 +1,3 @@
-/* 버튼, 카드, 헤더, 푸터, 배너, 플레이어 등 컴포넌트별 스타일
- */
 .header {
     position: sticky;
     top: 0;
@@ -194,4 +192,5 @@
 .grid {
     display: grid;
     gap: 16px;
+
 }
