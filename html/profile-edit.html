@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>아기 프로필 등록/수정</title>
+</head>
+
+<body>
+    <header class="container">
+        <h1>ChildCare</h1>
+        <nav><a href="/html/index.html">홈</a> · <a href="/html/profile-list.html">프로필 목록</a> · <a id="nav-login"
+                href="/html/login.html">로그인</a></nav>
+    </header>
+
+    <main class="container" style="max-width:520px;margin:24px auto;">
+        <h2 id="formTitle">프로필 등록</h2>
+        <form id="profileForm">
+            <label>이름<br /><input id="pName" required /></label><br /><br />
+            <label>생년월일<br /><input type="date" id="pBirth" required /></label><br /><br />
+            <label>성별<br />
+                <select id="pGender" required>
+                    <option value="">선택</option>
+                    <option value="여아">여아</option>
+                    <option value="남아">남아</option>
+                </select>
+            </label><br /><br />
+            <label>알레르기(선택)<br /><input id="pAllergy" placeholder="예: 우유, 계란" /></label><br /><br />
+            <label>보호자 연락처<br /><input id="pPhone" required placeholder="010-0000-0000" /></label><br /><br />
+            <label>사진(선택)<br /><input type="file" id="pPhoto" accept="image/*" /></label><br /><br />
+            <img id="photoPreview" alt=""
+                style="max-width:180px;display:none;border:1px solid #ddd;border-radius:8px;" /><br /><br />
+            <button type="submit">저장</button>
+            <button type="button" id="btnCancel">취소</button>
+        </form>
+    </main>
+
+    <footer class="container" style="margin:32px auto;">© ChildCare</footer>
+
+    <script defer src="/js/auth.js"></script>
+    <script defer src="/js/profile.js"></script>
+</body>
+
+</html>

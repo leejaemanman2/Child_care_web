@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>아기 프로필 목록</title>
+</head>
+
+<body>
+    <header class="container">
+        <h1>ChildCare</h1>
+        <nav><a href="/html/index.html">홈</a> · <a id="nav-login" href="/html/login.html">로그인</a></nav>
+    </header>
+
+    <main class="container" style="max-width:960px;margin:24px auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+            <h2>아기 프로필</h2>
+            <a href="/html/profile-edit.html"><button>+ 새 프로필</button></a>
+        </div>
+        <div id="profileList"
+            style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:16px;">
+        </div>
+    </main>
+
+    <footer class="container" style="margin:32px auto;">© ChildCare</footer>
+
+    <script defer src="/js/auth.js"></script>
+    <script defer src="/js/profile.js"></script>
+</body>
+
+</html>
