@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+</head>
+
+<body>
+    <header class="container">
+        <h1>ChildCare</h1>
+        <nav><a href="/html/index.html">홈</a> · <a id="nav-login" href="/html/login.html">로그인</a></nav>
+    </header>
+
+    <main class="container" style="max-width:520px;margin:32px auto;">
+        <h2>회원가입</h2>
+        <form id="signupForm">
+            <label>이메일<br />
+                <input type="email" id="suEmail" required placeholder="you@example.com" />
+            </label><br /><br />
+            <label>비밀번호 (8~20자, 영문·숫자·특수문자 2종 이상)<br />
+                <input type="password" id="suPassword" required minlength="8" maxlength="20" />
+            </label><br /><br />
+            <label>비밀번호 확인<br />
+                <input type="password" id="suPassword2" required />
+            </label><br /><br />
+            <label><input type="checkbox" id="suTerms" required /> 약관에 동의합니다</label><br /><br />
+            <button type="submit">가입하기</button>
+        </form>
+    </main>
+
+    <footer class="container" style="margin:32px auto;">© ChildCare</footer>
+    <script defer src="/js/auth.js"></script>
+</body>
+
+</html>
