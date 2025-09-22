@@ -94,6 +94,16 @@ function initSignup() {
     });
 }
 
+// 보호가 필요한 페이지에서 사용 (선택)
+function requireAuthOnPage(){
+  const needAuth = location.pathname.includes('profile-');
+  if(needAuth && !getAuth()){ alert('로그인이 필요합니다.'); location.href='/html/login.html'; }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  initNavAuth(); initLogin(); initSignup(); requireAuthOnPage(); // ← 추가
+});
+
+
 document.addEventListener('DOMContentLoaded', () => {
     initNavAuth();
     initLogin();
