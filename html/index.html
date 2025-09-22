@@ -1,283 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>초보 육아 웹 – 홈</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <style>
-        :root {
-            --brand: #2563eb;
-            --danger: #f97316;
-            --text: #111827;
-            --muted: #6b7280;
-            --bg: #ffffff;
-            --card: #ffffff;
-            --line: #e5e7eb;
-            --shadow: 0 8px 24px rgba(0, 0, 0, .06);
-            --radius: 16px;
-            --max: 1120px;
-        }
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/tokens.css">
 
-        * {
-            box-sizing: border-box
+    <script>
+        // HTML 불러오기 함수 정의
+        async function loadHTML(id, url) {
+            const resp = await fetch(url);
+            const html = await resp.text();
+            document.getElementById(id).innerHTML = html;
         }
-
-        body {
-            margin: 0;
-            background: var(--bg);
-            color: var(--text);
-            font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Apple SD Gothic Neo, Noto Sans KR, sans-serif
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none
-        }
-
-        .container {
-            max-width: var(--max);
-            margin: 0 auto;
-            padding: 0 20px
-        }
-
-        /* Header */
-        .header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: rgba(255, 255, 255, .85);
-            backdrop-filter: saturate(180%) blur(10px);
-            border-bottom: 1px solid var(--line)
-        }
-
-        .header-inner {
-            height: 56px;
-            display: flex;
-            gap: 20px;
-            align-items: center
-        }
-
-        .brand {
-            font-weight: 800;
-            font-size: 18px
-        }
-
-        .nav {
-            display: flex;
-            gap: 16px;
-            color: #4b5563
-        }
-
-        .nav a.active {
-            color: var(--brand);
-            font-weight: 600
-        }
-
-        .auth {
-            margin-left: auto;
-            display: flex;
-            gap: 12px;
-            color: #374151
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--line);
-            padding: 8px 12px;
-            border-radius: 10px;
-            background: #f9fafb;
-            cursor: pointer
-        }
-
-        .btn.primary {
-            border-color: transparent;
-            background: var(--brand);
-            color: #fff
-        }
-
-        .btn.ghost {
-            background: #fff
-        }
-
-        /* Layout */
-        main {
-            padding: 28px 0 120px
-        }
-
-        /* bottom space for mini player */
-        .grid {
-            display: grid;
-            gap: 16px
-        }
-
-        @media (min-width:900px) {
-            .grid {
-                grid-template-columns: 1fr 1fr
-            }
-        }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            padding: 16px;
-            box-shadow: var(--shadow)
-        }
-
-        .card h3 {
-            margin: 0 0 10px;
-            font-size: 15px
-        }
-
-        .muted {
-            color: var(--muted)
-        }
-
-        .row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap
-        }
-
-        .pill {
-            padding: 8px 12px;
-            border-radius: 12px;
-            background: #f3f4f6;
-            border: 1px solid var(--line)
-        }
-
-        .list {
-            margin: 8px 0 0;
-            padding: 0;
-            list-style: none;
-            display: grid;
-            gap: 8px
-        }
-
-        .list li a {
-            color: var(--brand)
-        }
-
-        .progress {
-            height: 8px;
-            background: #f3f4f6;
-            border-radius: 999px;
-            overflow: hidden
-        }
-
-        .progress>span {
-            display: block;
-            height: 100%;
-            width: 0;
-            background: var(--brand)
-        }
-
-        /* Onboarding banner */
-        .banner {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            border: 1px dashed var(--brand);
-            background: #eff6ff
-        }
-
-        .banner .btn {
-            background: #fff
-        }
-
-        /* Mini player */
-        .player {
-            position: fixed;
-            left: 50%;
-            bottom: 20px;
-            transform: translateX(-50%);
-            width: min(100% - 32px, 880px);
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            box-shadow: var(--shadow);
-            padding: 10px 12px;
-            z-index: 60
-        }
-
-        .player .top {
-            display: flex;
-            align-items: center;
-            gap: 12px
-        }
-
-        .player .title {
-            font-weight: 600;
-            font-size: 14px
-        }
-
-        .range {
-            appearance: none;
-            width: 100%;
-            height: 6px;
-            border-radius: 999px;
-            background: #eef2ff;
-            outline: none
-        }
-
-        .range::-webkit-slider-thumb {
-            appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--brand);
-            cursor: pointer
-        }
-
-        /* FAB */
-        .fab {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            background: var(--danger);
-            color: #fff;
-            border: none;
-            border-radius: 999px;
-            padding: 14px 16px;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            z-index: 60
-        }
-
-        .footer {
-            border-top: 1px solid var(--line);
-            padding: 24px 0;
-            color: #6b7280
-        }
-    </style>
+    </script>
 </head>
+
 
 <body>
     <!-- HEADER -->
-    <header class="header">
-        <div class="container header-inner">
-            <a class="brand" href="#">초보 육아 웹</a>
-            <nav class="nav">
-                <a class="active" href="#">홈</a>
-                <a href="#stories">동화</a>
-                <a href="#behaviors">행동사전</a>
-                <a href="#routines">루틴</a>
-                <a href="#growth">성장/건강</a>
-                <a href="#community">커뮤니티</a>
-            </nav>
-            <div class="auth" id="authArea">
-                <button class="btn ghost" id="loginBtn">로그인</button>
-                <button class="btn" id="signupBtn">회원가입</button>
-            </div>
-        </div>
-    </header>
+    <div id="header"></div>
 
     <!-- MAIN -->
     <main class="container">
-        <!-- Onboarding: Baby profile -->
         <section id="onboarding" class="card banner" style="display:none">
             <div>👶 <strong>아기 프로필</strong>이 없습니다. 등록하면 개인화가 시작돼요.</div>
             <div class="row" style="margin-left:auto">
@@ -285,7 +34,6 @@
             </div>
         </section>
 
-        <!-- Hero -->
         <section class="card" style="display:flex;align-items:center;justify-content:space-between;gap:16px">
             <div>
                 <h2 style="margin:0 0 6px;font-size:28px;line-height:1.2">육아 초보를 위한 필수 홈</h2>
@@ -294,9 +42,7 @@
             <div class="pill muted" id="babyChip">아기: -</div>
         </section>
 
-        <!-- GRID -->
         <section class="grid">
-            <!-- Quick Actions -->
             <div class="card">
                 <h3>Quick Actions</h3>
                 <div class="row">
@@ -307,13 +53,11 @@
                 </div>
             </div>
 
-            <!-- Routines -->
             <div class="card" id="routines">
                 <h3>Routines</h3>
                 <ul class="list" id="routineList"></ul>
             </div>
 
-            <!-- Continue Listening -->
             <div class="card">
                 <h3>Continue Listening</h3>
                 <div class="row" style="align-items:center">
@@ -328,7 +72,6 @@
                 </div>
             </div>
 
-            <!-- Tips -->
             <div class="card" id="behaviors">
                 <h3>오늘의 행동 팁</h3>
                 <ul class="list">
@@ -338,14 +81,12 @@
                 </ul>
             </div>
 
-            <!-- Growth Preview -->
             <div class="card" id="growth">
                 <h3>성장/건강 미리보기</h3>
                 <div class="muted" style="margin-bottom:8px">최근 8주 체중/키 추이</div>
                 <div style="height:96px;border-radius:10px;background:linear-gradient(180deg,#f8fafc,#eef2ff)"></div>
             </div>
 
-            <!-- Community -->
             <div class="card" id="community">
                 <h3>커뮤니티 & 전문가 QnA</h3>
                 <ul class="list">
@@ -372,117 +113,15 @@
     <a class="fab" href="tel:119" title="119 바로 전화">🚑 긴급</a>
 
     <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container muted">© 2025 육아 도래(이) · All Rights Reserved.</div>
-    </footer>
+    <div id="footer"></div>
 
-    <!-- SCRIPT (Mock state/handlers) -->
+    <script src="../js/main.js"></script>
+
     <script>
-        // ----- Mock "session" state -----
-        const state = {
-            user: null,        // { email: '...' }
-            baby: null,        // { name:'민준', birth:'2025-01-01' }
-            playing: false,
-            progress: 25
-        };
-
-        // DOM refs
-        const onboarding = document.getElementById('onboarding');
-        const babyChip = document.getElementById('babyChip');
-        const authArea = document.getElementById('authArea');
-        const loginBtn = document.getElementById('loginBtn');
-        const signupBtn = document.getElementById('signupBtn');
-        const addBabyBtn = document.getElementById('addBaby');
-        const routineList = document.getElementById('routineList');
-        const progressBar = document.getElementById('progressBar');
-        const playBtn = document.getElementById('playBtn');
-        const player = document.getElementById('player');
-        const toggleBtn = document.getElementById('toggleBtn');
-        const closePlayer = document.getElementById('closePlayer');
-        const range = document.getElementById('range');
-
-        // ---- UI update helpers ----
-        function renderAuth() {
-            if (state.user) {
-                authArea.innerHTML =
-                    '<span class="muted">' + state.user.email + (state.baby ? ' · ' + state.baby.name : '') + '</span>' +
-                    '<button class="btn" id="logoutBtn">로그아웃</button>';
-                document.getElementById('logoutBtn').onclick = () => { state.user = null; state.baby = null; renderAll(); };
-            } else {
-                authArea.innerHTML =
-                    '<button class="btn ghost" id="loginBtn">로그인</button>' +
-                    '<button class="btn" id="signupBtn">회원가입</button>';
-                document.getElementById('loginBtn').onclick = fakeLogin;
-                document.getElementById('signupBtn').onclick = fakeSignup;
-            }
-        }
-        function renderBaby() {
-            onboarding.style.display = (!state.user || state.baby) ? 'none' : '';
-            babyChip.textContent = '아기: ' + (state.baby ? `${state.baby.name} · ${state.baby.birth}` : '-');
-        }
-        function renderRoutines() {
-            const data = [
-                { time: '11:00', type: '수유', enabled: true },
-                { time: '14:00', type: '낮잠', enabled: true },
-                { time: '19:30', type: '목욕', enabled: false },
-            ];
-            routineList.innerHTML = data.map(r => `
-        <li class="card" style="padding:10px;display:flex;justify-content:space-between;align-items:center">
-          <div>${r.time} · ${r.type}</div>
-          <button class="btn ${r.enabled ? 'primary' : ''}" aria-pressed="${r.enabled}">
-            ${r.enabled ? 'ON' : 'OFF'}
-          </button>
-        </li>
-      `).join('');
-        }
-        function renderPlayer() {
-            if (state.playing) {
-                player.style.display = '';
-                toggleBtn.textContent = '일시정지';
-            } else {
-                toggleBtn.textContent = '재생';
-            }
-            progressBar.style.width = state.progress + '%';
-            range.value = state.progress;
-        }
-        function renderAll() {
-            renderAuth();
-            renderBaby();
-            renderRoutines();
-            renderPlayer();
-        }
-
-        // ---- Mock actions ----
-        function fakeLogin() {
-            const email = prompt('이메일 입력', 'user@example.com');
-            if (!email) return;
-            state.user = { email };
-            renderAll();
-        }
-        function fakeSignup() {
-            const email = prompt('회원가입 이메일', 'new@example.com');
-            if (!email) return;
-            state.user = { email };
-            alert('가입 완료! 아기 프로필을 등록해 보세요.');
-            renderAll();
-        }
-        addBabyBtn.onclick = () => {
-            const name = prompt('아기 이름', '민준');
-            const birth = prompt('아기 생일 (YYYY-MM-DD)', '2025-01-01');
-            if (!name || !birth) return;
-            state.baby = { name, birth };
-            renderAll();
-        };
-
-        // Player controls
-        playBtn.onclick = () => { state.playing = true; renderPlayer(); };
-        toggleBtn.onclick = () => { state.playing = !state.playing; renderPlayer(); };
-        closePlayer.onclick = () => { state.playing = false; renderPlayer(); };
-        range.oninput = (e) => { state.progress = Number(e.target.value); renderPlayer(); };
-
-        // Boot
-        renderAll();
+        loadHTML('header', '../components/header.html');
+        loadHTML('footer', '../components/footer.html');
     </script>
+
 </body>
 
 </html>
