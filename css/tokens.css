@@ -1,0 +1,13 @@
+/* 색상, 그림자, 반경, 브랜드 색 등 전역 변수 및 디자인 토큰/ */
+:root {
+    --brand: #2563eb;
+    --danger: #f97316;
+    --text: #111827;
+    --muted: #6b7280;
+    --bg: #ffffff;
+    --card: #ffffff;
+    --line: #e5e7eb;
+    --shadow: 0 8px 24px rgba(0, 0, 0, .06);
+    --radius: 16px;
+    --max: 1120px;
+}
