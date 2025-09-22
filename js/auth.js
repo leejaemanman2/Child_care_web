@@ -103,6 +103,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavAuth(); initLogin(); initSignup(); requireAuthOnPage(); // ← 추가
 });
 
+function showErr(input, msg){
+  let el = input.nextElementSibling;
+  if (!el || !el.classList.contains('error')) {
+    el = document.createElement('div'); el.className = 'error'; input.after(el);
+  }
+  el.textContent = msg;
+}
+function clearErr(input){ const el=input.nextElementSibling; if(el?.classList.contains('error')) el.textContent=''; }
+
+if (!isEmail(email)) { showErr($('#loginEmail'), '이메일 형식을 확인하세요.'); return; }
+clearErr($('#loginEmail'));
+
+const isPhone = v => /^01[016789]-?\d{3,4}-?\d{4}$/.test(v);
+
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavAuth();

@@ -94,48 +94,48 @@ function initProfileEdit() {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // 파일 → dataURL (있을 때만)
-        async function fileToDataUrl(file) {
-            if (!file) return current?.photo || '';
-            return new Promise((res) => {
-                const fr = new FileReader();
-                fr.onload = () => res(fr.result);
-                fr.readAsDataURL(file);
-            });
+        // 연락처 유효성 검사 추가
+        const phoneVal = phone.value.trim();
+        if (!/^01[016789]-?\d{3,4}-?\d{4}$/.test(phoneVal)) {
+            alert('연락처 형식을 확인하세요. (예: 010-1234-5678)');
+            phone.focus();
+            return;
         }
 
-        const photoUrl = await fileToDataUrl(photo.files?.[0]);
+        const file = photo.files?.[0];
+        const toDataURL = (f) => new Promise(res => {
+            if (!f) return res(cur?.photo || '');
+            const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(f);
+        });
+        const photoUrl = await toDataURL(file);
 
-        const arr = readProfiles();
-        if (current) {
-            // update
-            Object.assign(current, {
+        const arr = read();
+        if (cur) {
+            Object.assign(cur, {
                 name: name.value.trim(),
                 birth: birth.value,
                 gender: gender.value,
                 allergy: allergy.value.trim(),
-                phone: phone.value.trim(),
+                phone: phoneVal,
                 photo: photoUrl
             });
-            writeProfiles(arr);
-            alert('수정되었습니다.');
+            write(arr); alert('수정되었습니다.');
         } else {
-            // create
             arr.push({
                 id: uid(),
                 name: name.value.trim(),
                 birth: birth.value,
                 gender: gender.value,
                 allergy: allergy.value.trim(),
-                phone: phone.value.trim(),
+                phone: phoneVal,
                 photo: photoUrl,
                 createdAt: Date.now()
             });
-            writeProfiles(arr);
-            alert('등록되었습니다.');
+            write(arr); alert('등록되었습니다.');
         }
         location.href = '/html/profile-list.html';
     });
+
 
     btnCancel.addEventListener('click', () => {
         history.back();

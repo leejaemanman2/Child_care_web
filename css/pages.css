@@ -1,0 +1,4 @@
+/* css/pages.css */
+.auth-card, .profile-card { border:1px solid #e5e5e5; border-radius:12px; padding:16px; }
+.auth-form label { display:block; margin:10px 0 4px; }
+.error { color:#dc2626; font-size:13px; margin-top:4px; }
