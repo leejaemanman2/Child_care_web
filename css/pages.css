@@ -1,7 +1,51 @@
 /* css/pages.css */
-.auth-card, .profile-card { border:1px solid #e5e5e5; border-radius:12px; padding:16px; }
-.auth-form label { display:block; margin:10px 0 4px; }
-.error { color:#dc2626; font-size:13px; margin-top:4px; }
+.auth-card,
+.profile-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.auth-form label {
+    display: block;
+    margin: 10px 0 4px;
+}
+
+.error {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
 /* 페이지 전용 */
-#q, #sort, #prev, #next { height: 36px; }
-#prev[disabled], #next[disabled] { opacity: .5; cursor: not-allowed; }
+#q,
+#sort,
+#prev,
+#next {
+    height: 36px;
+}
+
+#prev[disabled],
+#next[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+#toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    display: none;
+    z-index: 1000;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+#toast.show {
+    opacity: 0.95;
+}

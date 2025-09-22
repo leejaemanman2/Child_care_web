@@ -1,43 +1,77 @@
-// ===== 유틸 =====
-const $ = (sel, parent = document) => parent.querySelector(sel);
+// js/auth.js
 
-function isEmail(v) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-}
+// ========== 유틸 ==========
+const $ = (sel) => document.querySelector(sel);
+const isEmail = (v) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+
+// 비번 강도(8~20자, 영문/숫자/특수문자 중 2종 이상)
 function isStrongPassword(v) {
-    // 8~20자, 영문/숫자/특수문자 중 2종 이상 포함 권장 규칙
-    if (v.length < 8 || v.length > 20) return false;
+    if (!v || v.length < 8 || v.length > 20) return false;
     const hasLetter = /[A-Za-z]/.test(v);
     const hasNumber = /[0-9]/.test(v);
     const hasSpecial = /[^A-Za-z0-9]/.test(v);
     return (hasLetter && hasNumber) || (hasLetter && hasSpecial) || (hasNumber && hasSpecial);
 }
 
-// 로그인 상태 체크/설정
+// 인라인 에러 메시지
+function showErr(input, msg) {
+    let el = input.nextElementSibling;
+    if (!el || !el.classList.contains('error')) {
+        el = document.createElement('div');
+        el.className = 'error';
+        el.style.color = 'red';
+        el.style.fontSize = '13px';
+        el.style.marginTop = '6px';
+        input.after(el);
+    }
+    el.textContent = msg;
+}
+function clearErr(input) {
+    const el = input.nextElementSibling;
+    if (el?.classList.contains('error')) el.textContent = '';
+}
+
+// 토스트 메시지
+function toast(msg, ms = 2000) {
+    const t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.style.display = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, ms);
+}
+
+// ========== 스토리지 ==========
+function getUsers() {
+    try { return JSON.parse(localStorage.getItem('users')) || []; }
+    catch { return []; }
+}
+function setUsers(arr) {
+    localStorage.setItem('users', JSON.stringify(arr));
+}
 function getAuth() {
-    try { return JSON.parse(localStorage.getItem('auth')) || null; }
+    try { return JSON.parse(localStorage.getItem('auth')); }
     catch { return null; }
 }
-function setAuth(email) {
-    localStorage.setItem('auth', JSON.stringify({ email, token: 'mock-' + Date.now() }));
+function setAuth(user) {
+    localStorage.setItem('auth', JSON.stringify(user));
 }
 function clearAuth() {
     localStorage.removeItem('auth');
 }
 
-// 네비게이션 로그인/로그아웃 버튼 상태
+// ========== 네비 로그인/로그아웃 표기 ==========
 function initNavAuth() {
     const navLogin = $('#nav-login');
-    if (!navLogin) return; // 헤더가 아직 공통화되지 않았을 수 있음
+    if (!navLogin) return;
 
-    const auth = getAuth();
-    if (auth) {
+    const me = getAuth();
+    if (me) {
         navLogin.textContent = '로그아웃';
         navLogin.href = '#';
         navLogin.addEventListener('click', (e) => {
             e.preventDefault();
             clearAuth();
-            alert('로그아웃 되었습니다.');
+            toast('로그아웃 되었습니다.');
             location.href = '/html/index.html';
         });
     } else {
@@ -46,80 +80,96 @@ function initNavAuth() {
     }
 }
 
-// ===== 로그인 처리 =====
+// ========== 로그인 ==========
 function initLogin() {
     const form = $('#loginForm');
     if (!form) return;
 
+    const emailInput = $('#loginEmail');
+    const pwInput = $('#loginPassword');
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = $('#loginEmail').value.trim();
-        const pw = $('#loginPassword').value;
 
-        if (!isEmail(email)) return alert('이메일 형식을 확인하세요.');
-        if (pw.length < 8) return alert('비밀번호는 8자 이상이어야 합니다.');
+        const email = emailInput.value.trim();
+        const pw = pwInput.value.trim();
 
-        // (백엔드 연동 전) 단순 통과 → 토큰 저장
-        setAuth(email);
-        alert('로그인 성공!');
-        location.href = '/html/index.html';
+        if (!isEmail(email)) { showErr(emailInput, '이메일 형식을 확인하세요.'); return; }
+        clearErr(emailInput);
+
+        if (pw.length < 8) { showErr(pwInput, '비밀번호는 8자 이상 입력하세요.'); return; }
+        clearErr(pwInput);
+
+        const users = getUsers();
+        const user = users.find(u => u.email === email && u.pw === pw);
+        if (!user) {
+            showErr(emailInput, '이메일 또는 비밀번호가 올바르지 않습니다.');
+            return;
+        }
+
+        setAuth({ email: user.email });
+        toast('로그인 성공!');
+        setTimeout(() => { location.href = '/html/profile-list.html'; }, 1200);
     });
 }
 
-// ===== 회원가입 처리 =====
+// ========== 회원가입 ==========
 function initSignup() {
     const form = $('#signupForm');
     if (!form) return;
 
+    const emailInput = $('#suEmail');
+    const pwInput = $('#suPassword');
+    const pw2Input = $('#suPassword2');
+    const termsInput = $('#suTerms');
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = $('#suEmail').value.trim();
-        const pw1 = $('#suPassword').value;
-        const pw2 = $('#suPassword2').value;
-        const terms = $('#suTerms').checked;
 
-        if (!isEmail(email)) return alert('이메일 형식을 확인하세요.');
-        if (!isStrongPassword(pw1)) return alert('비밀번호 규칙을 확인하세요.');
-        if (pw1 !== pw2) return alert('비밀번호가 일치하지 않습니다.');
-        if (!terms) return alert('약관에 동의해 주세요.');
+        const email = emailInput.value.trim();
+        const pw = pwInput.value.trim();
+        const pw2 = pw2Input.value.trim();
+        const terms = !!termsInput?.checked;
 
-        // (백엔드 연동 전) 로컬에 유저를 저장하는 흉내
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        if (users.find(u => u.email === email)) return alert('이미 가입된 이메일입니다.');
-        users.push({ email, password: pw1, createdAt: Date.now() });
-        localStorage.setItem('users', JSON.stringify(users));
+        if (!isEmail(email)) { showErr(emailInput, '이메일 형식을 확인하세요.'); return; }
+        clearErr(emailInput);
 
-        alert('회원가입 완료! 로그인 해주세요.');
-        location.href = '/html/login.html';
+        if (!isStrongPassword(pw)) { showErr(pwInput, '비밀번호 규칙을 확인하세요. (8~20자, 영문·숫자·특수문자 2종 이상)'); return; }
+        clearErr(pwInput);
+
+        if (pw !== pw2) { showErr(pw2Input, '비밀번호가 일치하지 않습니다.'); return; }
+        clearErr(pw2Input);
+
+        if (!terms) { showErr(termsInput, '약관에 동의해 주세요.'); return; }
+        if (termsInput) clearErr(termsInput);
+
+        const users = getUsers();
+        if (users.some(u => u.email === email)) {
+            showErr(emailInput, '이미 가입된 이메일입니다.');
+            return;
+        }
+
+        users.push({ email, pw });
+        setUsers(users);
+
+        toast('회원가입 완료! 로그인 해주세요.');
+        setTimeout(() => { location.href = '/html/login.html'; }, 1200);
     });
 }
 
-// 보호가 필요한 페이지에서 사용 (선택)
-function requireAuthOnPage(){
-  const needAuth = location.pathname.includes('profile-');
-  if(needAuth && !getAuth()){ alert('로그인이 필요합니다.'); location.href='/html/login.html'; }
+// ========== 보호 페이지 가드 ==========
+function requireAuthOnPage() {
+    const needAuth = location.pathname.includes('profile-');
+    if (needAuth && !getAuth()) {
+        toast('로그인이 필요합니다.');
+        setTimeout(() => { location.href = '/html/login.html'; }, 1200);
+    }
 }
-document.addEventListener('DOMContentLoaded', () => {
-  initNavAuth(); initLogin(); initSignup(); requireAuthOnPage(); // ← 추가
-});
 
-function showErr(input, msg){
-  let el = input.nextElementSibling;
-  if (!el || !el.classList.contains('error')) {
-    el = document.createElement('div'); el.className = 'error'; input.after(el);
-  }
-  el.textContent = msg;
-}
-function clearErr(input){ const el=input.nextElementSibling; if(el?.classList.contains('error')) el.textContent=''; }
-
-if (!isEmail(email)) { showErr($('#loginEmail'), '이메일 형식을 확인하세요.'); return; }
-clearErr($('#loginEmail'));
-
-const isPhone = v => /^01[016789]-?\d{3,4}-?\d{4}$/.test(v);
-
-
+// ========== 초기화 ==========
 document.addEventListener('DOMContentLoaded', () => {
     initNavAuth();
     initLogin();
     initSignup();
+    requireAuthOnPage();
 });
