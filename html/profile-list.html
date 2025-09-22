@@ -20,9 +20,30 @@
             <h2>아기 프로필</h2>
             <a href="/html/profile-edit.html"><button>+ 새 프로필</button></a>
         </div>
+
+        <div style="display:flex; gap:12px; align-items:center; justify-content:space-between; margin-top:8px;">
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <input id="q" placeholder="이름/알레르기 검색" style="padding:8px; min-width:220px;">
+                <select id="sort" style="padding:8px;">
+                    <option value="createdAt_desc">최신 등록순</option>
+                    <option value="name_asc">이름 ㄱ-ㅎ</option>
+                    <option value="birth_asc">생일 빠른순</option>
+                </select>
+                <span id="count" style="color:#666; font-size:14px;">0명</span>
+            </div>
+            <a href="/html/profile-edit.html"><button class="btn">+ 새 프로필</button></a>
+        </div>
+
         <div id="profileList"
             style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:16px;">
         </div>
+
+        <div style="display:flex; gap:8px; justify-content:center; align-items:center; margin:16px 0;">
+            <button id="prev">이전</button>
+            <span id="pageInfo" style="min-width:88px; text-align:center;">1 / 1</span>
+            <button id="next">다음</button>
+        </div>
+        
     </main>
 
     <footer class="container" style="margin:32px auto;">© ChildCare</footer>
