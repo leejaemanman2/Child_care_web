@@ -7,6 +7,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>아기 프로필 등록/수정</title>
+
+    <!-- fast guard: 로그인 안 했으면 곧바로 로그인 페이지로 -->
+    <script>
+        (function () {
+            try {
+                // auth.js의 setAuth가 저장한 키: 'auth'  (JSON 문자열)
+                var auth = localStorage.getItem('auth');
+                if (!auth) {
+                    window.location.replace('/html/login.html');
+                }
+            } catch (e) {
+                window.location.replace('/html/login.html');
+            }
+        })();
+    </script>
+
 </head>
 
 <body>
@@ -42,6 +58,24 @@
 
     <script defer src="/js/auth.js"></script>
     <script defer src="/js/profile.js"></script>
+
+    <script defer src="/js/auth.js"></script>
+    <script>
+        // 보조 가드 (fast guard가 실패했을 때 대비)
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                // auth.js에 getAuth()가 있다면 그걸 써도 됨: if (!getAuth()) { ... }
+                var auth = localStorage.getItem('auth');
+                if (!auth) {
+                    alert('로그인 후 이용 가능합니다.');
+                    location.href = '/html/login.html';
+                }
+            } catch (e) {
+                location.href = '/html/login.html';
+            }
+        });
+    </script>
+
 </body>
 
 </html>
