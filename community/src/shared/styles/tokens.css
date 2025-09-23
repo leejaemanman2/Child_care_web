@@ -1,0 +1,20 @@
+:root {
+    /* Colors */
+    --brand: #2563eb;
+    --brand-600: #1d4ed8;
+    --success: #10b981;
+    --bg: #f8fafc;
+    --text: #0f172a;
+    --muted: #475569;
+    --line: #e5e7eb;
+    --card: #ffffff;
+
+    /* Elevation / visuals */
+    --radius: 16px;
+    --shadow: 0 8px 24px rgba(2, 6, 23, 0.06);
+
+    /* Layout */
+    --max: 1120px;
+    --g: 12px;
+    /* gap unit */
+}
