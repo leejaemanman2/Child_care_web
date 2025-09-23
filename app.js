@@ -19,6 +19,10 @@ app.use('/components', express.static(path.join(__dirname, 'components')));
 app.get("/signup", (req, res) => {
     res.sendFile(path.join(__dirname, "html", "signup.html"));
 });
+// 로그인
+app.get("/signup", (req, res) => {
+    res.sendFile(path.join(__dirname, "html", "login.html"));
+});
 
 
 
