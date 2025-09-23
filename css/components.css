@@ -197,7 +197,8 @@
 }
 
 
-/* 행동 팁 */
+/* 행동팁 */
+
 .accordion-item {
     background-color: #f1f1f1;
     color: #333;
@@ -221,4 +222,5 @@
     display: none;
     background-color: white;
     overflow: hidden;
+
 }
