@@ -20,7 +20,7 @@ app.get("/signup", (req, res) => {
     res.sendFile(path.join(__dirname, "html", "signup.html"));
 });
 // 로그인
-app.get("/signup", (req, res) => {
+app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "html", "login.html"));
 });
 

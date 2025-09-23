@@ -69,14 +69,21 @@
                 </div>
             </div>
 
-            <div class="card" id="routines">
+            <!-- <div class="card" id="routines">
                 <h3>Routines</h3>
                 <ul class="list">
                     <li>• 기상 쭉쭉이</li>
                     <li>• 낮잠</li>
                     <li>• 촉감놀이</li>
                     <ul class="list" id="routineList"></ul>
+            </div> -->
+
+            <div class="card" id="routines">
+                <h2>알람 시간 설정</h2>
+                <input type="time" id="alarmTime">
+                <button id="setAlarm">알람 설정</button>
             </div>
+
 
             <div class="card">
                 <h3>Continue Listening</h3>
@@ -152,7 +159,8 @@
             <div class="card" id="growth">
                 <h3>성장/건강 미리보기</h3>
                 <div class="muted" style="margin-bottom:8px">최근 8주 체중/키 추이</div>
-                <div style="height:96px;border-radius:10px;background:linear-gradient(180deg,#f8fafc,#eef2ff)"></div>
+                <div style="height:96px;border-radius:10px;background:linear-gradient(180deg,#f8fafc,#eef2ff)">
+                </div>
             </div>
 
             <div class="card" id="community">
@@ -184,6 +192,8 @@
     <div id="footer"></div>
 
     <script src="../js/main.js"></script>
+    <script src="/js/alarm.js"></script> <!-- JS 불러오기 -->
+
 
     <script>
         loadHTML('header', '../components/header.html');
