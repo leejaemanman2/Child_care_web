@@ -195,3 +195,30 @@
     display: grid;
     gap: 16px;
 }
+
+
+/* 오늘의 행동 */
+.accordion-item {
+    background-color: #f1f1f1;
+    color: #333;
+    cursor: pointer;
+    padding: 10px 15px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    transition: 0.3s;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.accordion-item.active {
+    background-color: #ddd;
+}
+
+.panel {
+    padding: 0 15px;
+    display: none;
+    background-color: white;
+    overflow: hidden;
+}

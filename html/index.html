@@ -17,7 +17,23 @@
             const html = await resp.text();
             document.getElementById(id).innerHTML = html;
         }
+
+
     </script>
+    <script>
+        // 오늘의  행동
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordions = document.querySelectorAll('.accordion-item');
+            accordions.forEach(item => {
+                item.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                    const panel = item.nextElementSibling;
+                    panel.style.display = panel.style.display === "block" ? "none" : "block";
+                });
+            });
+        });
+    </script>
+
 </head>
 
 
@@ -78,12 +94,60 @@
 
             <div class="card" id="behaviors">
                 <h3>오늘의 행동 팁</h3>
-                <ul class="list">
-                    <li>• 낮잠 거부 3단계 체크 <span class="muted">(4~6개월)</span></li>
-                    <li>• 울음 즉시 대응 요령 <span class="muted">(0~3개월)</span></li>
-                    <li>• 분리불안 시작 시 환경 세팅 <span class="muted">(6~9개월)</span></li>
-                </ul>
+                <div class="accordion">
+
+                    <button class="accordion-item">자발적 놀이 참여 부족</button>
+                    <div class="panel">
+                        <strong>의미/원인:</strong> 발달지체, 자신감 부족, 동기 낮음<br>
+                        <strong>대응 방법:</strong> 심리운동 놀이 제공, 선택권 부여, 작은 성공 경험 쌓기<br>
+                        <strong>일상 예시:</strong> 아이가 블록을 쌓도록 유도하고 “네가 먼저 어떤 블록을 쌓고 싶은지 골라볼래?”라고 말하기
+                    </div>
+
+                    <button class="accordion-item">새로운 활동에 소극적</button>
+                    <div class="panel">
+                        <strong>의미/원인:</strong> 불안, 낯선 환경에 대한 두려움<br>
+                        <strong>대응 방법:</strong> 반복적 노출, 교사의 긍정적 피드백, 안전한 환경 조성<br>
+                        <strong>일상 예시:</strong> 새로운 색연필로 그림 그리기 시 “처음 해보는 거라서 신기하네! 잘 하고 있어”라고 칭찬
+                    </div>
+
+                    <button class="accordion-item">상호작용 저조</button>
+                    <div class="panel">
+                        <strong>의미/원인:</strong> 사회적 자신감 부족<br>
+                        <strong>대응 방법:</strong> 짝 놀이, 그룹 활동, 상호작용 칭찬<br>
+                        <strong>일상 예시:</strong> 친구와 장난감 나누기 활동 후 “친구랑 이렇게 같이 놀았구나, 멋지다!”라고 말하기
+                    </div>
+
+                    <button class="accordion-item">언어 표현 부족/지연</button>
+                    <div class="panel">
+                        <strong>의미/원인:</strong> 발달 지연, 환경적 자극 부족<br>
+                        <strong>대응 방법:</strong> 그림책 읽어주기, 질문·대화 유도, 언어 놀이 활용<br>
+                        <strong>일상 예시:</strong> 그림책 보면서 “강아지가 어디로 가는지 이야기해볼까?”라고 질문하며 대화 나누기
+                    </div>
+
+                    <button class="accordion-item">공격적 행동</button>
+                    <div class="panel">
+                        <strong>의미/원인:</strong> 부정적 양육, 스마트 미디어 과의존<br>
+                        <strong>대응 방법:</strong> 화용언어 지도, 미디어 사용 조절, 감정 표현 모델링<br>
+                        <strong>일상 예시:</strong> 화가 난 아이에게 “화를 이렇게 말로 표현해보자, ‘지금 화가 나요’라고 말해볼래?”
+                    </div>
+
+                    <button class="accordion-item">가정 내 상호작용 부족</button>
+                    <div class="panel">
+                        <strong>의미/원인:</strong> 가족 간 의사소통 부족, 환경 제한<br>
+                        <strong>대응 방법:</strong> 긍정적 상호작용 장려, 가정 내 놀이·대화 시간 확보<br>
+                        <strong>일상 예시:</strong> 저녁 식사 후 “오늘 하루 중 가장 즐거웠던 순간은 뭐야?”라고 이야기 나누기
+                    </div>
+
+                    <button class="accordion-item">정서·행동 문제</button>
+                    <div class="panel">
+                        <strong>의미/원인:</strong> 스트레스, 낮은 양육 효능감<br>
+                        <strong>대응 방법:</strong> 문제해결 전략 교육, 역할극·토론 활용, 부모 코칭<br>
+                        <strong>일상 예시:</strong> 장난감 정리 문제를 같이 해결하며 “어떻게 하면 다 같이 정리할 수 있을까?”라고 아이와 함께 방법 찾기
+                    </div>
+
+                </div>
             </div>
+
 
             <div class="card" id="growth">
                 <h3>성장/건강 미리보기</h3>
