@@ -79,9 +79,21 @@
             </div> -->
 
             <div class="card" id="routines">
-                <h2>알람 시간 설정</h2>
+                <h2>알람 설정</h2>
+
+                <label>제목: </label>
+                <input type="text" id="alarmTitle" placeholder="알람 제목">
+                <br><br>
+
+                <label>시간: </label>
                 <input type="time" id="alarmTime">
-                <button id="setAlarm">알람 설정</button>
+                <button id="setAlarm">알람 추가</button>
+
+                <h3>설정된 알람 목록</h3>
+                <ul id="alarmList"></ul>
+
+                <script src="/js/alarm.js"></script>
+
             </div>
 
 
@@ -192,8 +204,6 @@
     <div id="footer"></div>
 
     <script src="../js/main.js"></script>
-    <script src="/js/alarm.js"></script> <!-- JS 불러오기 -->
-
 
     <script>
         loadHTML('header', '../components/header.html');
