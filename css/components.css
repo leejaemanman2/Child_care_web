@@ -217,28 +217,45 @@ li {
 
 /* 행동팁 */
 
-.accordion-item {
-    background-color: #f1f1f1;
-    color: #333;
-    cursor: pointer;
-    padding: 10px 15px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    transition: 0.3s;
-    margin-top: 5px;
-    font-weight: bold;
-}
-
-.accordion-item.active {
-    background-color: #ddd;
-}
-
-.panel {
-    padding: 0 15px;
-    display: none;
-    background-color: white;
+.behavior-slider {
+    position: relative;
     overflow: hidden;
+    width: 100%;
+    padding: 0 40px;
+    /* 좌우 여백 */
+}
 
+.slide-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.slide-btn.prev {
+    left: 0;
+    /* padding으로 밀려있음 */
+}
+
+.slide-btn.next {
+    right: 0;
+}
+
+.behavior-slider .slide-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    /* 이동 속도와 easing 조정 */
+}
+
+.behavior-slider .behavior-card {
+    flex: 0 0 100%;
+    /* 한 화면에 하나씩 */
+    box-sizing: border-box;
+    padding: 10px;
 }
