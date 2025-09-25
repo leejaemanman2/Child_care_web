@@ -60,6 +60,7 @@
     background: #fff;
 }
 
+
 .card {
     background: var(--card);
     border: 1px solid var(--line);
@@ -196,6 +197,9 @@
     gap: 16px;
 }
 
+
+
+
 /* 알람 */
 body {
     font-family: Arial, sans-serif;
@@ -211,7 +215,19 @@ li {
     padding: 5px 10px;
     background-color: #f0f0f0;
     border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.btn.delete {
+    background: #ff7777;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+}
+
+
 
 
 
