@@ -6,6 +6,19 @@ const alarmList = document.getElementById('alarmList');
 
 Notification.requestPermission();
 
+// 입력 필드를 오늘 날짜와 현재 시간으로 설정하는 함수
+const setDefaultDateTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+
+    alarmDateInput.value = `${year}-${month}-${day}`;
+    alarmTimeInput.value = `${hours}:${minutes}`;
+};
+
 // 알람 목록을 서버에서 불러와 화면에 표시하는 함수
 const loadAlarms = async () => {
     try {
@@ -91,8 +104,11 @@ const addAlarmToDB = async (title, dateInput, timeInput) => {
     }
 };
 
-// 페이지 로드 시 기존 알람 불러오기
-document.addEventListener('DOMContentLoaded', loadAlarms);
+// 페이지 로드 시 기본 날짜/시간 설정 및 기존 알람 불러오기
+document.addEventListener('DOMContentLoaded', () => {
+    setDefaultDateTime();
+    loadAlarms();
+});
 
 // 알람 추가 버튼 클릭 이벤트
 setAlarmBtn.addEventListener('click', () => {
@@ -104,8 +120,7 @@ setAlarmBtn.addEventListener('click', () => {
 
     addAlarmToDB(title, dateInput, timeInput);
 
-    // 입력 초기화
+    // 입력 초기화 후 기본 날짜/시간으로 재설정
     alarmTitleInput.value = '';
-    alarmDateInput.value = '';
-    alarmTimeInput.value = '';
+    setDefaultDateTime();
 });
