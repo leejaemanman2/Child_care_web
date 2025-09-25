@@ -25,7 +25,6 @@ const loadAlarms = async () => {
 const createAlarmListItem = (alarm) => {
     const li = document.createElement('li');
     const span = document.createElement('span');
-    // 데이터베이스에서 가져온 날짜와 시간을 그대로 표시
     span.textContent = `${alarm.date} ${alarm.time} - ${alarm.title}`;
     li.appendChild(span);
 
@@ -43,7 +42,7 @@ const createAlarmListItem = (alarm) => {
 
     // 미래의 알람일 경우에만 setTimeout 실행
     if (timeout > 0) {
-        alarm.timeoutId = setTimeout(() => {
+        alarm.timeoutId = setTimeout(async () => {
             new Notification(alarm.title, {
                 body: `설정한 시간입니다: ${alarm.date} ${alarm.time}`,
             });
@@ -58,6 +57,9 @@ const createAlarmListItem = (alarm) => {
                 const nextDayTime = alarm.time;
 
                 addAlarmToDB(alarm.title, nextDayDate, nextDayTime);
+            } else {
+                // 사용자가 반복을 원하지 않으면 데이터베이스에서도 삭제
+                await fetch(`/api/alarms/${alarm.id}`, { method: 'DELETE' });
             }
 
             // 알람이 울린 후 목록에서 제거
