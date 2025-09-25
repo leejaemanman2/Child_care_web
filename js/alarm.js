@@ -4,29 +4,29 @@ const alarmTimeInput = document.getElementById('alarmTime');
 const setAlarmBtn = document.getElementById('setAlarm');
 const alarmList = document.getElementById('alarmList');
 
-let alarms = [];
-
 Notification.requestPermission();
 
-// 알람 설정 로직을 함수로 분리
-const setNewAlarm = (title, dateInput, timeInput) => {
-    const [year, month, day] = dateInput.split('-').map(Number);
-    const [hours, minutes] = timeInput.split(':').map(Number);
+// 알람 목록을 서버에서 불러와 화면에 표시하는 함수
+const loadAlarms = async () => {
+    try {
+        const response = await fetch('/api/alarms');
+        const alarms = await response.json();
 
-    const now = new Date();
-    const alarmTime = new Date(year, month - 1, day, hours, minutes, 0);
+        alarmList.innerHTML = ''; // 기존 목록 초기화
+        alarms.forEach(alarm => {
+            createAlarmListItem(alarm);
+        });
+    } catch (error) {
+        console.error('Failed to load alarms:', error);
+    }
+};
 
-    if (alarmTime <= now) return alert("선택한 시간이 현재보다 이전입니다.");
-
-    const timeout = alarmTime - now;
-
-    const alarmObj = { title, date: dateInput, time: timeInput, timeoutId: null };
-    alarms.push(alarmObj);
-
-    // 화면에 표시
+// 알람 목록 항목(li)을 생성하고 알림을 예약하는 함수
+const createAlarmListItem = (alarm) => {
     const li = document.createElement('li');
     const span = document.createElement('span');
-    span.textContent = `${dateInput} ${timeInput} - ${title}`;
+    // 데이터베이스에서 가져온 날짜와 시간을 그대로 표시
+    span.textContent = `${alarm.date} ${alarm.time} - ${alarm.title}`;
     li.appendChild(span);
 
     const deleteBtn = document.createElement('button');
@@ -37,34 +37,58 @@ const setNewAlarm = (title, dateInput, timeInput) => {
     alarmList.appendChild(li);
 
     // 알림 예약
-    alarmObj.timeoutId = setTimeout(() => {
-        new Notification(title, {
-            body: `설정한 시간입니다: ${dateInput} ${timeInput}`,
-        });
+    const alarmTime = new Date(`${alarm.date}T${alarm.time}`);
+    const now = new Date();
+    const timeout = alarmTime.getTime() - now.getTime();
 
-        // 알람이 울린 후 다음 날 반복 여부 묻기
-        const repeatAlarm = window.confirm(`'${title}' 알람이 완료되었습니다. 내일도 이 알람을 반복하시겠습니까?`);
+    // 미래의 알람일 경우에만 setTimeout 실행
+    if (timeout > 0) {
+        alarm.timeoutId = setTimeout(() => {
+            new Notification(alarm.title, {
+                body: `설정한 시간입니다: ${alarm.date} ${alarm.time}`,
+            });
 
-        if (repeatAlarm) {
-            const nextDay = new Date(alarmTime);
-            nextDay.setDate(nextDay.getDate() + 1);
-            const nextDayDate = nextDay.toISOString().split('T')[0];
-            const nextDayTime = timeInput;
+            // 알람이 울린 후 다음 날 반복 여부 묻기
+            const repeatAlarm = window.confirm(`'${alarm.title}' 알람이 완료되었습니다. 내일도 이 알람을 반복하시겠습니까?`);
 
-            setNewAlarm(title, nextDayDate, nextDayTime);
-        }
+            if (repeatAlarm) {
+                const nextDay = new Date(alarmTime);
+                nextDay.setDate(nextDay.getDate() + 1);
+                const nextDayDate = nextDay.toISOString().split('T')[0];
+                const nextDayTime = alarm.time;
 
-        li.remove();
-        alarms = alarms.filter(a => a !== alarmObj);
-    }, timeout);
+                addAlarmToDB(alarm.title, nextDayDate, nextDayTime);
+            }
+
+            // 알람이 울린 후 목록에서 제거
+            li.remove();
+        }, timeout);
+    }
 
     // 삭제 버튼 클릭 이벤트
-    deleteBtn.addEventListener('click', () => {
-        clearTimeout(alarmObj.timeoutId);
+    deleteBtn.addEventListener('click', async () => {
+        await fetch(`/api/alarms/${alarm.id}`, { method: 'DELETE' });
         li.remove();
-        alarms = alarms.filter(a => a !== alarmObj);
     });
 };
+
+// 새로운 알람을 데이터베이스에 추가하는 함수
+const addAlarmToDB = async (title, dateInput, timeInput) => {
+    const response = await fetch('/api/alarms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, date: dateInput, time: timeInput })
+    });
+
+    if (response.ok) {
+        loadAlarms(); // 성공하면 목록 새로고침
+    } else {
+        alert('알람 추가 실패');
+    }
+};
+
+// 페이지 로드 시 기존 알람 불러오기
+document.addEventListener('DOMContentLoaded', loadAlarms);
 
 // 알람 추가 버튼 클릭 이벤트
 setAlarmBtn.addEventListener('click', () => {
@@ -72,9 +96,11 @@ setAlarmBtn.addEventListener('click', () => {
     const dateInput = alarmDateInput.value;
     const timeInput = alarmTimeInput.value;
 
-    // 입력 초기화는 함수 내부에서 처리
-    setNewAlarm(title, dateInput, timeInput);
+    if (!dateInput || !timeInput) return alert("날짜와 시간을 모두 선택하세요.");
 
+    addAlarmToDB(title, dateInput, timeInput);
+
+    // 입력 초기화
     alarmTitleInput.value = '';
     alarmDateInput.value = '';
     alarmTimeInput.value = '';
