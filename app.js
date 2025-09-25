@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import mysql from 'mysql2/promise'; // async/await를 위한 promise 모듈
+import mysql from 'mysql2/promise';
 
 const app = express();
 const PORT = 3000;
@@ -11,13 +11,12 @@ const __dirname = path.dirname(__filename);
 
 // 데이터베이스 연결 설정
 const db = mysql.createPool({
-    host: 'localhost',      // MySQL 서버 주소
-    user: 'root',           // 사용자명 (일반적으로 'root')
-    password: '1234',           // 비밀번호 (설정된 비밀번호로 변경)
-    database: 'child_alarm'    // 위에서 만든 데이터베이스 이름
+    host: 'localhost',
+    user: 'root',
+    password: '1234', // <-- 비밀번호를 자신의 것으로 변경하세요
+    database: 'child_alarm' // <-- 데이터베이스 이름을 자신의 것으로 변경하세요
 });
 
-// JSON 형식의 요청 본문을 파싱하기 위해 추가
 app.use(express.json());
 
 app.use('/css', express.static(path.join(__dirname, 'css')));
@@ -61,11 +60,10 @@ app.delete('/api/alarms/:id', async (req, res) => {
     }
 });
 
-// 회원가입
 app.get("/signup", (req, res) => {
     res.sendFile(path.join(__dirname, "html", "signup.html"));
 });
-// 로그인
+
 app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "html", "login.html"));
 });

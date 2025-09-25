@@ -7,9 +7,6 @@ const state = {
 
 const onboarding = document.getElementById('onboarding');
 const babyChip = document.getElementById('babyChip');
-const authArea = document.getElementById('authArea');
-const loginBtn = document.getElementById('loginBtn');
-const signupBtn = document.getElementById('signupBtn');
 const addBabyBtn = document.getElementById('addBaby');
 const routineList = document.getElementById('routineList');
 const progressBar = document.getElementById('progressBar');
@@ -20,6 +17,9 @@ const closePlayer = document.getElementById('closePlayer');
 const range = document.getElementById('range');
 
 function renderAuth() {
+    const authArea = document.getElementById('authArea');
+    if (!authArea) return; // authArea가 로드되지 않았을 경우를 대비
+
     if (state.user) {
         authArea.innerHTML =
             '<span class="muted">' + state.user.email + (state.baby ? ' · ' + state.baby.name : '') + '</span>' +
@@ -27,19 +27,25 @@ function renderAuth() {
         document.getElementById('logoutBtn').onclick = () => { state.user = null; state.baby = null; renderAll(); };
     } else {
         authArea.innerHTML =
-            '<button class="btn ghost" id="loginBtn">로그인</button>' +
-            '<button class="btn" id="signupBtn">회원가입</button>';
-        document.getElementById('loginBtn').onclick = fakeLogin;
-        document.getElementById('signupBtn').onclick = fakeSignup;
+            '<a href="/login" class="btn ghost" id="loginBtn">로그인</a>' +
+            '<a href="/signup" class="btn" id="signupBtn">회원가입</a>';
+
+        // 새로 생성된 요소에 이벤트를 다시 연결
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        if (loginBtn) loginBtn.onclick = fakeLogin;
+        if (signupBtn) signupBtn.onclick = fakeSignup;
     }
 }
 
 function renderBaby() {
+    if (!onboarding || !babyChip) return; // 요소가 로드되지 않았을 경우를 대비
     onboarding.style.display = (!state.user || state.baby) ? 'none' : '';
     babyChip.textContent = '아기: ' + (state.baby ? `${state.baby.name} · ${state.baby.birth}` : '-');
 }
 
 function renderRoutines() {
+    if (!routineList) return; // 요소가 로드되지 않았을 경우를 대비
     const data = [
         { time: '11:00', type: '수유', enabled: true },
         { time: '14:00', type: '낮잠', enabled: true },
@@ -56,6 +62,8 @@ function renderRoutines() {
 }
 
 function renderPlayer() {
+    if (!player || !toggleBtn || !progressBar || !range) return; // 요소가 로드되지 않았을 경우를 대비
+
     if (state.playing) {
         player.style.display = '';
         toggleBtn.textContent = '일시정지';
@@ -88,17 +96,19 @@ function fakeSignup() {
     renderAll();
 }
 
-addBabyBtn.onclick = () => {
-    const name = prompt('아기 이름', '민준');
-    const birth = prompt('아기 생일 (YYYY-MM-DD)', '2025-01-01');
-    if (!name || !birth) return;
-    state.baby = { name, birth };
-    renderAll();
-};
+if (addBabyBtn) {
+    addBabyBtn.onclick = () => {
+        const name = prompt('아기 이름', '민준');
+        const birth = prompt('아기 생일 (YYYY-MM-DD)', '2025-01-01');
+        if (!name || !birth) return;
+        state.baby = { name, birth };
+        renderAll();
+    };
+}
 
-playBtn.onclick = () => { state.playing = true; renderPlayer(); };
-toggleBtn.onclick = () => { state.playing = !state.playing; renderPlayer(); };
-closePlayer.onclick = () => { state.playing = false; renderPlayer(); };
-range.oninput = (e) => { state.progress = Number(e.target.value); renderPlayer(); };
+if (playBtn) playBtn.onclick = () => { state.playing = true; renderPlayer(); };
+if (toggleBtn) toggleBtn.onclick = () => { state.playing = !state.playing; renderPlayer(); };
+if (closePlayer) closePlayer.onclick = () => { state.playing = false; renderPlayer(); };
+if (range) range.oninput = (e) => { state.progress = Number(e.target.value); renderPlayer(); };
 
-renderAll();
+// renderAll(); 함수는 index.html의 loadHTML이 끝난 후 호출되므로 주석처리
