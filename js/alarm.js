@@ -83,7 +83,9 @@ const addAlarmToDB = async (title, dateInput, timeInput) => {
     });
 
     if (response.ok) {
-        loadAlarms(); // 성공하면 목록 새로고침
+        // loadAlarms() 대신 새로운 알람만 추가
+        const newAlarm = await response.json();
+        createAlarmListItem(newAlarm);
     } else {
         alert('알람 추가 실패');
     }
