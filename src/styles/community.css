@@ -1,0 +1,199 @@
+/* =========================
+   Community – Page specific
+   ========================= */
+
+.community-wrap {
+    padding: 12px 0 32px;
+}
+
+.community-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.community-title {
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* 같은 패널 안의 2행 구성: 검색 / 필터 */
+.toolbar {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    /* 검색 / 전체 / 최신순 */
+    gap: 10px;
+}
+
+/* 카드 전체 클릭 가능 */
+.post-card.clickable {
+    cursor: pointer;
+}
+
+.post-card.clickable:focus {
+    outline: 3px solid var(--primary-weak);
+}
+
+.post-card.clickable:active {
+    transform: translateY(1px);
+}
+
+/* 전문가 표시 */
+.post-card.expert .title {
+    color: var(--primary);
+}
+
+.expert-badge {
+    background: var(--primary-weak);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+
+/* 카드 내부 타이틀/풋터 */
+.post-card .title {
+    font-weight: 800;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+
+.post-card .foot {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 카드 제목을 버튼처럼 사용 (접근성 & hover) */
+.post-card .title-btn {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0 0 8px 0;
+    font: inherit;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+}
+
+.post-card .title-btn:hover {
+    text-decoration: underline;
+}
+
+/* 상세 모달 상단 액션 */
+.detail-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
+/* 댓글 */
+.comments {
+    margin-top: 16px;
+}
+
+.comments-header {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+    display: grid;
+    gap: 10px;
+}
+
+.comment-item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 10px 12px;
+}
+
+.comment-text {
+    line-height: 1.5;
+}
+
+.comment-meta {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.comment-empty {
+    color: var(--muted);
+}
+
+.comment-form {
+    display: grid;
+    gap: 8px;
+}
+
+.comment-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 입력 공통 */
+.textarea {
+    resize: vertical;
+    min-height: 100px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    width: 100%;
+    padding: 12px 14px;
+    font: inherit;
+    background: #fff;
+}
+
+.label {
+    font-weight: 700;
+    margin: 8px 0 6px;
+    display: block;
+}
+
+
+/* 페이지 버튼 비활성화 */
+.page-btn:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+/* 행 유틸 */
+.row-right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.row-left {
+    display: flex;
+    align-items: center;
+}
+
+.gap8 {
+    gap: 8px;
+}
+
+/* 수정 폼 */
+.edit-form {
+    display: grid;
+    gap: 8px;
+}
