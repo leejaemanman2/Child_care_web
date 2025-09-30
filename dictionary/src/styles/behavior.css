@@ -1,0 +1,866 @@
+/* src/styles/behavior.css */
+
+@import "./tokens.css";
+
+:root {
+    --bg: #f8fafc;
+    --card: #fff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --brand: #6c5ce7;
+    --ok: #10b981;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --radius: 14px;
+    --shadow: 0 6px 24px rgba(2, 6, 23, .06);
+    --space-1: 6px;
+    --space-2: 10px;
+    --space-3: 14px;
+    --space-4: 20px;
+}
+
+.page.behaviors {
+    background: var(--bg);
+}
+
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+h3,
+h4 {
+    color: var(--text);
+    margin: 0 0 var(--space-2);
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.btn {
+    background: var(--brand);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px 14px;
+}
+
+.btn.ghost {
+    background: transparent;
+    border: 1px solid #e5e7eb;
+}
+
+.tag {
+    border-radius: 999px;
+    padding: 6px 10px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+}
+
+.pill {
+    border-radius: 999px;
+    background: #f1f5f9;
+    padding: 4px 8px;
+}
+
+.banner.warning {
+    border-left: 4px solid var(--danger);
+    background: #fff1f2;
+}
+
+.progress {
+    height: 6px;
+    border-radius: 999px;
+    background: #e5e7eb;
+    overflow: hidden
+}
+
+.progress>i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--brand), #8b5cf6)
+}
+
+.refs li {
+    margin: 6px 0
+}
+
+.refs .org {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 6px
+}
+
+.page.behaviors {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.page-title {
+    font-weight: 800;
+    font-size: 22px;
+    margin: 0;
+}
+
+.behavior-toolbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.search input {
+    width: 100%;
+    height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--line, #e5e7eb);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 8px;
+}
+
+.tag {
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--line, #e5e7eb);
+    border-radius: 999px;
+    background: #fff;
+    font-weight: 700;
+    color: var(--muted, #64748b);
+    cursor: pointer;
+}
+
+.tag.active {
+    color: var(--text, #0f172a);
+    border-color: var(--text, #0f172a);
+}
+
+.behavior-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+@media (max-width: 860px) {
+    .behavior-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.behavior-card {
+    border-radius: 16px;
+    padding: 16px;
+    background: #fff;
+    border: 1px solid var(--line, #eef2f7);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .03);
+    cursor: pointer;
+    transition: transform .06s ease, box-shadow .06s ease;
+}
+
+.behavior-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .06);
+}
+
+.behavior-card h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+.behavior-card p {
+    margin: 6px 0;
+    line-height: 1.4;
+    color: #334155;
+}
+
+.pill-row {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.pill {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.empty {
+    padding: 24px;
+    text-align: center;
+    color: #94a3b8;
+}
+
+/* Modal */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, .35);
+    display: grid;
+    place-items: center;
+    z-index: 100;
+}
+
+.modal {
+    width: min(680px, 92vw);
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 16px;
+    border: 1px solid #e5e7eb;
+}
+
+.modal header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.modal .icon {
+    background: transparent;
+    border: 0;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.modal-body p {
+    margin: 8px 0;
+}
+
+/* 공통 컨테이너 폭 (커뮤니티와 통일) */
+.page.behaviors {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* 섹션 헤더 */
+.page.behaviors h2,
+.page.behaviors h3,
+.page.behaviors h4 {
+    line-height: 1.2;
+}
+
+/* AI 섹션 */
+.ai-form label {
+    align-self: center;
+    color: var(--muted, #64748b);
+}
+
+.ai-form input,
+.ai-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line, #e5e7eb);
+    border-radius: 12px;
+    background: #fff;
+    outline: none;
+}
+
+.ai-form textarea {
+    resize: vertical;
+}
+
+/* 결과 그리드: 데스크탑 3열, 모바일 1열 */
+.ai-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.ai-results .card {
+    border: 1px solid var(--line, #eef2f7);
+    border-radius: 16px;
+    padding: 14px;
+    background: #fff;
+}
+
+.ai-results .card h4 {
+    margin: 0 0 8px;
+    font-size: 15px;
+}
+
+.ai-results ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+@media (max-width: 860px) {
+    .ai-results {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 버튼 통일(커뮤니티 톤) */
+.btn {
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 0;
+    background: var(--accent, #4f46e5);
+    color: #fff;
+    font-weight: 700;
+}
+
+.btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+/* 경고/에러 */
+.alert.error {
+    margin-top: 8px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+
+/* 로딩 스켈레톤 (선택) */
+.skeleton {
+    background: linear-gradient(90deg, #f1f5f9 25%, #e5e7eb 37%, #f1f5f9 63%);
+    background-size: 400% 100%;
+    animation: shine 1.2s ease-in-out infinite;
+    border-radius: 12px;
+}
+
+@keyframes shine {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+/* 경고 배너 */
+.banner {
+    border: 1px solid var(--line, #e5e7eb);
+    border-radius: 12px;
+    padding: 12px 14px;
+    background: #fff;
+}
+
+.mt-4 {
+    margin-top: 8px;
+}
+
+.refs {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.refs li {
+    margin: 6px 0;
+}
+
+.refs a {
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--primary);
+}
+
+.refs a:hover {
+    text-decoration: underline;
+}
+
+.refs .meta {
+    color: var(--muted);
+    margin-left: 6px;
+    font-size: 0.95em;
+}
+
+/* --- AI 결과 보조 스타일 --- */
+
+
+.refs .org {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.refs .score {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.banner.warning {
+    border: 1px solid #f0c2c2;
+    background: #fdeeee;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* ===== 공통 레이아웃 스케일 통일 ===== */
+.page.behaviors.layout-medium {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 12px;
+}
+
+/* 카드 패딩/라운드 통일 */
+.page.behaviors .card {
+    padding: 16px;
+    border-radius: 12px;
+}
+
+/* 버튼/인풋 스케일 */
+.page.behaviors .btn {
+    height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.page.behaviors input,
+.page.behaviors textarea {
+    border: 1px solid #e5e7eb;
+    /* slate-200 */
+    border-radius: 10px;
+}
+
+.page.behaviors .ai-form textarea {
+    min-height: 140px;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 12px;
+}
+
+/* 제목 스케일(사전/분석 동일) */
+.page.behaviors h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.page.behaviors h4 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+/* 그리드 스케일(사전/분석 동일 규칙) */
+.page.behaviors .behavior-grid,
+.page.behaviors .ai-results {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* 태그/필터 버튼 살짝 키우기 */
+.page.behaviors .tag {
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 999px;
+}
+
+/* 경고 배너 여백 */
+.page.behaviors .banner.warning {
+    margin-top: 16px;
+}
+
+/* 반응형(넓은 화면에서 살짝 확대) */
+@media (min-width: 1200px) {
+    .page.behaviors.layout-medium {
+        max-width: 1000px;
+    }
+}
+
+/* 모바일 미세 조정 */
+@media (max-width: 480px) {
+    .page.behaviors .btn {
+        height: 38px;
+        font-size: 13px;
+    }
+
+    .page.behaviors .ai-form textarea {
+        min-height: 120px;
+    }
+}
+
+/* 선택 사항: 존재하면 더 예쁘게 보임 */
+.pill.ok {
+    background: #e9f9ef;
+    color: #0a7c2f;
+}
+
+.pill.danger {
+    background: #ffefef;
+    color: #b00020;
+}
+
+.chips .tag {
+    cursor: pointer;
+}
+
+.page.behaviors {
+    background: var(--bg);
+}
+
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.banner.warning {
+    border-left: 4px solid var(--danger);
+    background: #fff1f2;
+}
+
+.progress {
+    height: 6px;
+    border-radius: 999px;
+    background: #e5e7eb;
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+.progress>i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--brand), #8b5cf6);
+}
+
+.refs li {
+    margin: 6px 0
+}
+
+.refs .meta,
+.refs .org {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 6px
+}
+
+/* === Buttons (page-scoped, 강한 선택자) === */
+.page.behaviors .btn {
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 600;
+    border: none;
+}
+
+.page.behaviors .btn-primary {
+    background: var(--brand, #6c5ce7);
+    color: #fff;
+}
+
+.page.behaviors .btn-primary:hover {
+    filter: brightness(.96);
+}
+
+.page.behaviors .btn-primary:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.page.behaviors .btn-ghost {
+    background: #fff;
+    color: var(--text);
+    border: 1px solid #e5e7eb;
+}
+
+.page.behaviors .btn-ghost:hover {
+    background: #f8fafc;
+}
+
+/* iOS/Safari 기본 버튼 외형 제거 (흰색 강제되는 이슈 방지) */
+.page.behaviors button.btn,
+.page.behaviors .btn {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* 키보드 포커스 링 */
+.page.behaviors .btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, .25);
+}
+
+/* 눌렀을 때 살짝 눌리는 느낌 */
+.page.behaviors .btn:active {
+    transform: translateY(1px);
+}
+
+/* 클릭 가능하게 강제 */
+.page.behaviors .btn,
+.page.behaviors .tag,
+.page.behaviors button {
+    cursor: pointer;
+    pointer-events: auto;
+    user-select: none;
+}
+
+/* 비활성(로딩 등)만 눌리지 않게 */
+.page.behaviors .btn:disabled,
+.page.behaviors button:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: .6;
+}
+
+/* iOS/Safari 기본외형 제거는 유지 */
+.page.behaviors button.btn,
+.page.behaviors .btn {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.page.behaviors .tag {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.page.behaviors .tag:hover {
+    background: #f8fafc;
+}
+
+/* ── Triage banner ───────────────────────────── */
+.triage-banner {
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin: 10px 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border: 1px solid transparent;
+}
+
+.triage-title {
+    font-weight: 700;
+}
+
+.triage-reasons {
+    font-size: 0.95rem;
+    opacity: 0.95;
+}
+
+.triage-danger {
+    background: #ffe8e8;
+    border-color: #ffb3b3;
+}
+
+.triage-warn {
+    background: #fff3e0;
+    border-color: #ffd59b;
+}
+
+.triage-ok {
+    background: #eaf8ef;
+    border-color: #bfe6cc;
+}
+
+/* ── Cards ───────────────────────────────────── */
+.card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.card-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* ── Citations ───────────────────────────────── */
+.citations {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.citations .badge {
+    display: inline-block;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    margin-right: 8px;
+}
+
+.citations .score {
+    margin-left: 8px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.citations .snippet {
+    margin-top: 4px;
+    font-size: 0.92rem;
+    color: #475569;
+    line-height: 1.35;
+}
+
+/* Followups */
+.followups-card .bullets {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.followups-card .bullets li {
+    margin: 6px 0;
+}
+
+/* ── Triage banner ───────────────────────────── */
+.triage-banner {
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin: 10px 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border: 1px solid transparent;
+}
+
+.triage-title {
+    font-weight: 700;
+}
+
+.triage-reasons {
+    font-size: 0.95rem;
+    opacity: 0.95;
+}
+
+.triage-danger {
+    background: #ffe8e8;
+    border-color: #ffb3b3;
+}
+
+.triage-warn {
+    background: #fff3e0;
+    border-color: #ffd59b;
+}
+
+.triage-ok {
+    background: #eaf8ef;
+    border-color: #bfe6cc;
+}
+
+/* ── Citations ───────────────────────────────── */
+.refs .badge {
+    display: inline-block;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    margin-right: 8px;
+}
+
+.refs .snippet {
+    margin-top: 4px;
+    font-size: 0.92rem;
+    color: #475569;
+    line-height: 1.35;
+}
+
+/* ========== Chips grid (2 rows fill) ========== */
+.chips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+.chip-wide { width: 100%; text-align: center; padding: 12px 10px; }
+
+/* === Force 1.8x scaling inside Behaviors page === */
+.page.behaviors { font-size: 1em !important; line-height: 1.5; }
+
+/* 내부 요소가 px로 고정돼 있어도 부모의 1.8em을 따르도록 강제 */
+.page.behaviors * { font-size: 1em !important; }
+
+/* 예외: 보조 텍스트는 살짝 작게 */
+.page.behaviors small,
+.page.behaviors .muted { font-size: 1em !important; }
+
+/* 헤딩 단계별 미세 보정 */
+.page.behaviors h1 { font-size: 1.4em !important; }
+.page.behaviors h2 { font-size: 1.3em !important; }
+.page.behaviors h3 { font-size: 1.2em !important; }
+.page.behaviors h4 { font-size: 1.1em !important; }
+
+/* 폼/버튼도 강제 상속 */
+.page.behaviors input,
+.page.behaviors textarea,
+.page.behaviors button,
+.page.behaviors select { font-size: 1em !important; }
+
+/* ===== 고정 레이아웃 (반응형 비활성) ===== */
+.page.behaviors.layout-fixed{
+  width: 1120px;   /* 스샷 비율에 맞춘 고정 폭 */
+  min-width: 1120px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* 결과 카드 3열 고정 */
+.page.behaviors .ai-results{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* 고정 3열 */
+  gap: 12px;
+}
+
+/* 샘플 칩: 4열 고정(두 줄로 꽉 차게) */
+.page.behaviors .chips-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 항상 4개씩 */
+  gap: 8px;
+}
+
+.page.behaviors .chip-wide{
+  width: 100%;
+  justify-content: center;
+}
+
+/* 카드/배너 폭이 컨테이너에 맞춰 흔들리지 않도록 */
+.page.behaviors .card,
+.page.behaviors .banner{
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* textarea 내부 여백 */
+.page.behaviors .input-roomy {
+  padding: 14px 16px; /* 좌우 16px */
+}
+
+/* 경고 알림 부드러운 등장 */
+.pill.fade-in {
+  opacity: 0;
+  transform: translateY(-4px);
+  animation: fadeSlideIn .28s ease-out forwards;
+}
+@keyframes fadeSlideIn {
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,23 @@
+[
+    {
+        "id": "kdca-fever",
+        "title": "영유아 발열 및 응급 신호 안내",
+        "org": "KDCA",
+        "url": "https://example.org/kdca/fever",
+        "text": "영유아의 고열(39℃ 이상), 호흡곤란, 청색증, 경련, 의식저하 등은 응급 신호입니다. 발열 시 미온수 마사지, 수분 보충, 해열제 복용 안내, 위험 신호 시 즉시 119 또는 응급실 방문."
+    },
+    {
+        "id": "aap-2019",
+        "title": "Transitions in Early Childhood",
+        "org": "AAP",
+        "url": "https://example.org/aap",
+        "text": "낯선 환경 전이 시 예고·시각 단서 제공, 짧은 전이 루틴, 취침 전 20–30분 조용한 시간, 문제행동에는 기능적 대체활동 제시."
+    },
+    {
+        "id": "who-2020",
+        "title": "Caregiver Guidelines",
+        "org": "WHO",
+        "url": "https://example.org/who",
+        "text": "양육자 지침: 일관된 루틴, 수면 위생, 안전한 놀이 환경, 위험 신호 관찰 및 즉시 진료 권고."
+    }
+]

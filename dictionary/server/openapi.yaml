@@ -1,0 +1,150 @@
+openapi: 3.0.3
+info:
+  title: Child Behavior API
+  version: 1.1.0
+servers:
+  - url: http://localhost:4000
+paths:
+  /healthz:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example: { ok: true, build: "guardrails-v2-rag1" }
+
+  /api/analyze-behavior:
+    post:
+      summary: Analyze child behavior text and return signals, risk, actions, citations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AnalyzeRequest" }
+            examples:
+              basic:
+                summary: Minimal request
+                value: { text: "고열 39.5도, 숨이 가빠보여요" }
+              with_meta:
+                summary: With age/duration/context
+                value:
+                  age_months: 23
+                  duration: "2주"
+                  context: "낯선 곳에서 더 심함"
+                  text: "고열 39도, 호흡곤란처럼 보여요"
+      responses:
+        "200":
+          description: Analysis result
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AnalyzeResponse" }
+              examples:
+                ok:
+                  value:
+                    extracted:
+                      signals: ["발열/고열","호흡곤란"]
+                      risk_level: high
+                      temp_c: 39.5
+                    hypotheses:
+                      - { label: "적응/전이 스트레스", confidence: 0.58, why: "낯선 상황에서 악화" }
+                      - { label: "감각추구(던지기)", confidence: 0.45, why: "던지기 반복" }
+                    actions:
+                      - "⚠️ 응급 경고: 호흡곤란·청색증·경련·의식저하·고열(39℃ 이상) 등 위험 신호 시 즉시 119 또는 응급실 방문"
+                      - "전이 신호 제공: 활동 전 5분 예고"
+                      - "수면 루틴 고정: 취침 전 20–30분 조용한 시간"
+                    citations:
+                      - { id: "aap-healthychildren-fever-2022", title: "Fever in Children", org: "AAP", url: "https://example.org/aap/fever", score: 3.1, snippet: "Seek urgent care if ..." }
+                    alerts: ["39℃ 이상 고열","호흡곤란"]
+                    disclaimer: "이 결과는 의학적 진단이 아니며 참고용입니다..."
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error400" }
+              example:
+                ok: false
+                code: "VALIDATION_ERROR"
+                message: "String must contain at least 10 character(s)"
+  /rag/stats:
+    get:
+      summary: RAG index stats
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  count: { type: integer }
+                  source: { type: string }
+                  updated_at: { type: integer, description: "epoch ms" }
+                  sample_ids: { type: array, items: { type: string } }
+
+  /rag/reload:
+    post:
+      summary: Reload RAG corpus from sources.jsonl/json
+      responses:
+        "200":
+          description: Reloaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  count: { type: integer }
+                  source: { type: string }
+
+components:
+  schemas:
+    AnalyzeRequest:
+      type: object
+      properties:
+        age_months: { type: integer, minimum: 0, maximum: 72, description: "아기 개월 수" }
+        duration: { type: string, description: "지속 기간/빈도 예: 2주, 하루 3~4회" }
+        context: { type: string, description: "맥락/상황 예: 낯선 장소에서 심함" }
+        text: { type: string, minLength: 10, maxLength: 2000, description: "자유 서술" }
+      required: [text]
+
+    AnalyzeResponse:
+      type: object
+      properties:
+        extracted:
+          type: object
+          properties:
+            signals: { type: array, items: { type: string } }
+            risk_level: { type: string, enum: [low, high] }
+            temp_c: { type: number, description: "파싱된 체온(°C) 있으면 반환" }
+        hypotheses:
+          type: array
+          items:
+            type: object
+            properties:
+              label: { type: string }
+              confidence: { type: number }
+              why: { type: string }
+        actions: { type: array, items: { type: string } }
+        citations:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              title: { type: string }
+              org: { type: string }
+              url: { type: string, format: uri }
+              score: { type: number }
+              snippet: { type: string }
+        alerts: { type: array, items: { type: string } }
+        disclaimer: { type: string }
+
+    Error400:
+      type: object
+      properties:
+        ok: { type: boolean }
+        code: { type: string }
+        message: { type: string }

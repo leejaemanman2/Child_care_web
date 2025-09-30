@@ -1,0 +1,10 @@
+:root {
+    --maxw: 960px;
+    --container-pad: 16px;
+    --line: #E5E7EB;
+    --text: #111827;
+    --primary: #2563eb;
+    --primary-weak: rgba(37, 99, 235, .25);
+    --container: 960px;
+    /* Footer.css에서 사용 */
+}

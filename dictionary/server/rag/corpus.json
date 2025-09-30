@@ -1,0 +1,23 @@
+[
+    {
+        "id": "aap-2019",
+        "org": "AAP",
+        "title": "Transitions in Early Childhood",
+        "url": "https://example.org/aap",
+        "text": "Transitions, routines, and anticipatory guidance reduce behavior challenges. Provide warnings before activity changes and keep predictable bedtime routines."
+    },
+    {
+        "id": "who-2020",
+        "org": "WHO",
+        "title": "Caregiver Guidelines",
+        "url": "https://example.org/who",
+        "text": "Caregivers should respond to emotional cues, offer consistent structure, and avoid punitive approaches. Encourage positive interactions and safe play."
+    },
+    {
+        "id": "kdca-fever",
+        "org": "KDCA",
+        "title": "영유아 발열 및 응급 신호 안내",
+        "url": "https://example.org/kdca/fever",
+        "text": "영유아에서 39도 이상의 고열이 지속되거나 호흡곤란, 청색증, 의식저하, 경련 등 응급 신호가 보이면 즉시 응급실 내원 또는 119에 연락해야 한다."
+    }
+]
